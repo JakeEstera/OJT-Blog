@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import CountUp from './CountUp.jsx'
 
 // Animated circular progress indicator (value / max).
-export default function ProgressRing({ value, max, label, size = 168, children }) {
+// `delay` (ms) and `duration` (s) let the arc run on the same timeline as other animations; `linear` keeps a steady speed.
+export default function ProgressRing({ value, max, label, size = 168, children, delay = 300, duration = 1.8, linear = false }) {
   const stroke = 12
   const radius = (size - stroke) / 2
   const circumference = 2 * Math.PI * radius
@@ -10,9 +11,9 @@ export default function ProgressRing({ value, max, label, size = 168, children }
   const [offset, setOffset] = useState(circumference)
 
   useEffect(() => {
-    const id = setTimeout(() => setOffset(circumference * (1 - pct)), 300)
+    const id = setTimeout(() => setOffset(circumference * (1 - pct)), delay)
     return () => clearTimeout(id)
-  }, [circumference, pct])
+  }, [circumference, pct, delay])
 
   return (
     <div className="ring" style={{ width: size, height: size }}>
@@ -35,6 +36,7 @@ export default function ProgressRing({ value, max, label, size = 168, children }
           fill="none"
           strokeDasharray={circumference}
           strokeDashoffset={offset}
+          style={{ transition: `stroke-dashoffset ${duration}s ${linear ? 'linear' : 'cubic-bezier(0.22, 1, 0.36, 1)'}` }}
           transform={`rotate(-90 ${size / 2} ${size / 2})`}
         />
       </svg>

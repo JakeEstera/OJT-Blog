@@ -132,11 +132,14 @@ export async function makeFront(profile, photoUrl, hint = 'TAP TO ENTER') {
   ctx.textAlign = 'left'
   ctx.fillStyle = 'rgba(234, 244, 236, 0.5)'
   ctx.font = `500 26px ${BODY}`
-  ctx.fillText('REQUIRED HOURS', 110, 1120)
+  ctx.fillText('TOTAL HOURS', 110, 1120)
+  const hoursCenter = 110 + ctx.measureText('TOTAL HOURS').width / 2
   ctx.fillText('SUPERVISOR', 560, 1120)
   ctx.fillStyle = '#eaf4ec'
   ctx.font = `700 44px ${DISPLAY}`
-  ctx.fillText(`${profile.targetHours} hrs`, 110, 1176)
+  ctx.textAlign = 'center'
+  ctx.fillText(`${profile.targetHours}`, hoursCenter, 1176)
+  ctx.textAlign = 'left'
   fitText(ctx, profile.supervisor, 360, 44, 700, DISPLAY)
   ctx.fillText(profile.supervisor, 560, 1176)
 
@@ -149,7 +152,7 @@ export async function makeFront(profile, photoUrl, hint = 'TAP TO ENTER') {
   ctx.fillStyle = C1
   ctx.textAlign = 'center'
   ctx.font = `700 38px ${DISPLAY}`
-  ctx.fillText(`${hint}  →`, W / 2, pill.y + 60)
+  ctx.fillText(hint, W / 2, pill.y + 60)
 
   return canvas.toDataURL('image/png')
 }

@@ -4,7 +4,7 @@ import Lanyard from '../components/Lanyard.jsx'
 import profile from '../data/profile.js'
 import { makeBack, makeFront, makeStrap } from '../lib/idCard.js'
 
-const AUTO_SECONDS = 30
+const AUTO_SECONDS = 60
 const EXIT_MS = 750
 const BLOG_PATH = '/home'
 
@@ -69,9 +69,9 @@ export default function Landing() {
             orientation="portrait"
             finish="glossy"
             cornerRadius={0.3}
-            size={0.62}
+            size={0.58}
             anchor="center"
-            strapLength={0.5}
+            strapLength={0.3}
             strapWidth={0.65}
             metal="silver"
             onSelect={enter}
@@ -79,15 +79,11 @@ export default function Landing() {
         )}
       </div>
 
-      <div className="landing-copy">
-        <span className="eyebrow"><i /> Welcome</span>
-        <p className="landing-hint">Tap the ID card to open my OJT blog</p>
-      </div>
-
       <div className="landing-foot">
-        <span className="landing-timer" aria-live="polite">
-          Opening automatically in {left}s
-        </span>
+        <div className="landing-copy">
+          <span className="eyebrow landing-welcome">Welcome</span>
+          <p className="landing-hint">Tap the ID card to open my OJT blog</p>
+        </div>
         <span className="landing-bar" aria-hidden="true">
           <i style={{ transform: `scaleX(${left / AUTO_SECONDS})` }} />
         </span>

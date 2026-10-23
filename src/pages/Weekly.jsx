@@ -8,7 +8,7 @@ export default function Weekly() {
     <>
       <span className="eyebrow"><i /> Timeline</span>
       <h1 className="page-title">Weekly Reports</h1>
-      <p className="lead">A running log of my tasks and learnings, newest first.</p>
+      <p className="lead">A running log of my tasks and learnings, week by week.</p>
 
       <div className="week-list">
         {weeks.map((w) => (

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="640" viewBox="0 0 1600 640">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12544f"/><stop offset="1" stop-color="#092328"/></linearGradient>
+<linearGradient id="bld" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a835f"/><stop offset="1" stop-color="#12544f"/></linearGradient>
+</defs>
+<rect width="1600" height="640" fill="url(#sky)"/>
+<circle cx="1320" cy="120" r="70" fill="#8bbb92" opacity=".35"/>
+<rect x="470" y="150" width="660" height="410" rx="10" fill="url(#bld)"/>
+<rect x="430" y="120" width="740" height="46" rx="8" fill="#8bbb92" opacity=".9"/>
+<g fill="#092328" opacity=".75">
+<rect x="520" y="210" width="70" height="70" rx="6"/><rect x="620" y="210" width="70" height="70" rx="6"/><rect x="720" y="210" width="70" height="70" rx="6"/><rect x="820" y="210" width="70" height="70" rx="6"/><rect x="920" y="210" width="70" height="70" rx="6"/><rect x="1020" y="210" width="70" height="70" rx="6"/>
+<rect x="520" y="320" width="70" height="70" rx="6"/><rect x="620" y="320" width="70" height="70" rx="6"/><rect x="920" y="320" width="70" height="70" rx="6"/><rect x="1020" y="320" width="70" height="70" rx="6"/>
+<rect x="740" y="400" width="120" height="160" rx="8"/>
+</g>
+<rect x="0" y="560" width="1600" height="80" fill="#092328"/>
+<text x="800" y="360" text-anchor="middle" font-family="Arial,sans-serif" font-size="46" font-weight="700" fill="#eaf4ec">SAFADECO</text>
+<text x="800" y="602" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#8bbb92">Replace with the building photo</text>
+</svg>

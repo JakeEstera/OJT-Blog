@@ -2,16 +2,21 @@ import profile from '../data/profile.js'
 import Reveal from '../components/Reveal.jsx'
 import TiltCard from '../components/TiltCard.jsx'
 import ReflectiveCard from '../components/ReflectiveCard.jsx'
+import RefineFrame from '../components/RefineFrame.jsx'
+import ContactToggles from '../components/ContactToggles.jsx'
+import usePhotoStatus, { PHOTO_LABELS } from '../lib/usePhotoStatus.js'
 import weeks from '../data/weeks.js'
 
+const photoUrl = `${import.meta.env.BASE_URL}${profile.photo.replace(/^\//, '')}`
+
 export default function Profile() {
+  const photoStatus = usePhotoStatus()
   const totalHours = weeks.reduce((sum, w) => sum + w.hours, 0)
-  const initials = profile.name.split(' ').map((n) => n[0]).join('').slice(0, 2)
   const details = [
     ['Company', profile.company],
     ['Role', profile.role],
     ['Duration', profile.duration],
-    ['Required hours', `${profile.targetHours} hours`],
+    ['Total hours', `${profile.targetHours} hours`],
     ['Supervisor', profile.supervisor],
     ['School', profile.school],
   ]
@@ -19,17 +24,19 @@ export default function Profile() {
   return (
     <>
       <div className="profile-head">
-        <div className="avatar-wrap">
-          <div className="avatar">
-            {profile.photo ? (
-              <img
-                src={`${import.meta.env.BASE_URL}${profile.photo.replace(/^\//, '')}`}
-                alt={profile.name}
-              />
-            ) : (
-              initials
-            )}
-          </div>
+        <div className="profile-photo-card">
+          <RefineFrame
+            status={photoStatus}
+            aspectRatio="1 / 1"
+            width={230}
+            radius={18}
+            background="#092328"
+            color="#eaf4ec"
+            stageDuration={400}
+            labels={PHOTO_LABELS}
+          >
+            <img src={photoUrl} alt={profile.name} draggable={false} />
+          </RefineFrame>
         </div>
         <div>
           <span className="eyebrow"><i /> {profile.role}</span>
@@ -80,11 +87,7 @@ export default function Profile() {
 
       <Reveal>
         <h2>Contact</h2>
-        <div className="actions">
-          {profile.links.map((l) => (
-            <a className="btn btn-ghost" key={l.label} href={l.href}>{l.label}</a>
-          ))}
-        </div>
+        <ContactToggles links={profile.links} />
       </Reveal>
     </>
   )

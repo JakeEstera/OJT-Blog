@@ -10,8 +10,8 @@ export default function WeeklyEntry() {
   if (index === -1) return <NotFound />
 
   const entry = weeks[index]
-  const newer = weeks[index - 1]
-  const older = weeks[index + 1]
+  const newer = weeks[index + 1]
+  const older = weeks[index - 1]
 
   return (
     <article>

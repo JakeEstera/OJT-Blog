@@ -11,28 +11,42 @@ const shared = {
   totalHours: profile.targetHours,
 }
 
+// Card rarity shown on the back of each trainee card: 'common' | 'rare' | 'legendary'.
+export const RARITY = {
+  common: { label: 'Common', color: '#8bbb92' },
+  rare: { label: 'Rare', color: '#5cc8ff' },
+  legendary: { label: 'Legendary', color: '#ffc94a' },
+}
+
 const members = [
   {
-    name: 'Co-OJT Name 1',
-    photo: '/images/member1.svg',
+    name: 'Ralph',
+    photo: '/images/member-ralph-2.jpg',
+    photoPosition: '50% 58%', // which part of the picture the card shows (x% y%)
+    rarity: 'rare',
     school: 'School / University',
     course: 'Course',
   },
   {
-    name: 'Co-OJT Name 2',
-    photo: '/images/member2.svg',
+    name: 'John Mark',
+    photo: '/images/member-john-mark.jpg',
+    photoPosition: '50% 22%',
+    rarity: 'common',
     school: 'School / University',
     course: 'Course',
   },
   {
-    name: 'Co-OJT Name 3',
-    photo: '/images/member3.svg',
+    name: 'Tru',
+    photo: '/images/member-tru.jpg',
+    photoPosition: '50% 30%',
+    rarity: 'common',
     school: 'School / University',
     course: 'Course',
   },
   {
-    name: 'Co-OJT Name 4',
-    photo: '/images/member4.svg',
+    name: 'Ronnie',
+    photo: '/images/member-ronnie.jpg',
+    rarity: 'legendary',
     school: 'School / University',
     course: 'Course',
   },

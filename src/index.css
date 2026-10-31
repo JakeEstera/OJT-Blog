@@ -542,3 +542,76 @@ a:hover { color: #fff; }
 /* GCash sits directly under GitHub */
 .contact-toggles > .contact-gcash { grid-column: 2; grid-row: 2; }
 @media (max-width: 640px) { .contact-toggles { grid-template-columns: auto; } .contact-toggles > .contact-github, .contact-toggles > .contact-gcash { grid-column: 1; grid-row: auto; } }
+
+/* ---------- Trainee cards: "?" on the front, photo on the back ---------- */
+.member-front { width: 100%; height: 100%; display: grid; place-items: center; align-content: center; gap: 0.6rem; background: radial-gradient(circle at 50% 40%, rgba(139, 187, 146, 0.25), transparent 60%), linear-gradient(160deg, var(--c2), var(--c1)); }
+.member-front b { font-family: var(--font-display); font-size: 7.5rem; line-height: 1; color: var(--c4); text-shadow: 0 0 30px rgba(139, 187, 146, 0.55); animation: floaty 4s ease-in-out infinite; }
+.member-front small { color: var(--muted); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.member-reveal { position: relative; width: 100%; height: 100%; background: var(--c1); }
+.member-reveal img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+.member-reveal__info { position: absolute; left: 0; right: 0; bottom: 0; display: grid; gap: 0.1rem; padding: 2.4rem 0.9rem 0.8rem; background: linear-gradient(to top, rgba(9, 35, 40, 0.92), rgba(9, 35, 40, 0)); }
+.member-reveal__info strong { font-family: var(--font-display); font-size: 1.05rem; color: #fff; }
+.member-reveal__info span { color: var(--c4); font-size: 0.78rem; }
+
+/* Rarity badge at the top of the revealed trainee card */
+.member-rarity { position: absolute; top: 0.7rem; left: 50%; transform: translateX(-50%); z-index: 3; padding: 0.22rem 0.85rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #092328; background: var(--rarity, #8bbb92); box-shadow: 0 4px 14px -4px var(--rarity, #8bbb92), inset 0 1px 0 rgba(255, 255, 255, 0.45); white-space: nowrap; }
+.member-rarity--legendary { background: linear-gradient(110deg, #ffb52e, #fff1a8, #ffb52e); background-size: 220% auto; animation: shine 3s linear infinite; }
+.member-rarity--rare { color: #05222b; }
+.member-reveal::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--rarity-ring, transparent) 70%, transparent); }
+
+/* Card back: photo sits in a frame, and the background changes with the rarity */
+.member-reveal { background: linear-gradient(160deg, #12544f, #092328); }
+.member-reveal--rare { background: radial-gradient(120% 70% at 50% 0%, rgba(92, 200, 255, 0.5), transparent 65%), linear-gradient(160deg, #0f6a8c, #0a2a48 70%, #071a30); }
+.member-reveal--legendary { background: radial-gradient(120% 70% at 50% 0%, rgba(255, 220, 120, 0.6), transparent 62%), linear-gradient(160deg, #b8860b, #6b4a07 55%, #3a2704); background-size: 100% 100%, 220% 220%; animation: legendaryBg 6s ease-in-out infinite; }
+@keyframes legendaryBg { 50% { background-position: 0 0, 100% 100%; } }
+.member-reveal img { position: absolute; inset: 2.7rem 0.7rem 3.4rem; width: calc(100% - 1.4rem); height: calc(100% - 6.1rem); border-radius: 12px; box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.7), 0 0 0 2px color-mix(in srgb, var(--rarity) 80%, transparent); }
+.member-reveal__info { background: none; padding: 0 0.9rem 0.75rem; text-align: center; }
+.member-reveal__info strong { font-size: 1rem; }
+.member-reveal__info span { color: color-mix(in srgb, var(--rarity) 85%, #fff); }
+.member-reveal::after { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--rarity) 60%, transparent); }
+
+/* ---------- Shiny trainee cards: orbiting border light, glow, shine sweep, sparkles ---------- */
+.member-grid .tilted-card__front { --ring: #8bbb92; --orbit: 4.2s; }
+.member-reveal { --ring: var(--rarity); --orbit: 4.2s; border-radius: inherit; }
+.member-reveal--rare { --orbit: 3.2s; }
+.member-reveal--legendary { --orbit: 2.4s; }
+
+.member-grid .tilted-card__front::before,
+.member-reveal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  padding: 2px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--spin), transparent 0deg, transparent 215deg, color-mix(in srgb, var(--ring) 30%, transparent) 270deg, var(--ring) 325deg, #ffffff 352deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  pointer-events: none;
+  animation: borderSpin var(--orbit) linear infinite;
+}
+
+/* glow around the whole card once it's flipped */
+.member-card { transition: filter 0.6s ease; }
+.member-card[data-flipped] { filter: drop-shadow(0 0 14px color-mix(in srgb, var(--rarity) 55%, transparent)); }
+.member-card--legendary[data-flipped] { animation: legendGlow 2.6s ease-in-out infinite; }
+@keyframes legendGlow {
+  0%, 100% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--rarity) 50%, transparent)); }
+  50% { filter: drop-shadow(0 0 26px color-mix(in srgb, var(--rarity) 85%, transparent)); }
+}
+
+/* diagonal shine that sweeps across the card */
+.member-shine { position: absolute; inset: 0; z-index: 5; pointer-events: none; background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.38) 50%, transparent 62%); background-size: 260% 100%; background-position: 160% 0; animation: cardShine 4.5s ease-in-out infinite; }
+.member-reveal--rare .member-shine { animation-duration: 3.6s; }
+.member-reveal--legendary .member-shine { animation-duration: 2.8s; background-image: linear-gradient(115deg, transparent 36%, rgba(255, 244, 190, 0.6) 50%, transparent 64%); }
+@keyframes cardShine { 0%, 45% { background-position: 160% 0; } 100% { background-position: -60% 0; } }
+
+/* twinkling sparkles (rare + legendary) */
+.member-sparkle { position: absolute; z-index: 6; width: 12px; height: 12px; pointer-events: none; background: radial-gradient(circle, #fff, rgba(255, 255, 255, 0) 70%); clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%); opacity: 0; animation: twinkle 2.4s ease-in-out infinite; animation-delay: calc(var(--i) * 0.5s); }
+.member-sparkle:nth-of-type(1) { top: 20%; left: 12%; }
+.member-sparkle:nth-of-type(2) { top: 32%; right: 10%; width: 16px; height: 16px; }
+.member-sparkle:nth-of-type(3) { top: 58%; left: 8%; }
+.member-sparkle:nth-of-type(4) { top: 70%; right: 12%; width: 14px; height: 14px; }
+.member-sparkle:nth-of-type(5) { top: 14%; right: 30%; width: 9px; height: 9px; }
+@keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }

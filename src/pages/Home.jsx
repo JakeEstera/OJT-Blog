@@ -12,7 +12,7 @@ import usePhotoStatus, { PHOTO_LABELS, PHOTO_START, PHOTO_DURATION } from '../li
 
 const heroPhoto = `${import.meta.env.BASE_URL}${profile.photo.replace(/^\//, '')}`
 
-import members from '../data/members.js'
+import members, { RARITY } from '../data/members.js'
 
 // Every training photo, from every week (defined once so the wall doesn't restart on re-render).
 const wallItems = weeks.flatMap((w) =>
@@ -145,16 +145,17 @@ export default function Home() {
           <h2>My fellow OJT trainees</h2>
         </div>
         <p className="gallery-summary">
-          We train together at {profile.company}. Click or tap a card to flip it and see their
-          details.
+          We train together at {profile.company}. Click or tap a card to flip it and find out who
+          it is.
         </p>
         <div className="member-grid">
           {members.map((m) => (
             <TiltedCard
               key={m.name}
-              imageSrc={`${import.meta.env.BASE_URL}${m.photo.replace(/^\//, '')}`}
-              altText={`${m.name} photo`}
-              captionText="Click to flip"
+              className={`member-card member-card--${m.rarity ?? 'common'}`}
+              style={{ '--rarity': (RARITY[m.rarity] ?? RARITY.common).color }}
+              altText="Mystery trainee card"
+              captionText="Click to reveal"
               containerHeight="330px"
               containerWidth="230px"
               imageHeight="310px"
@@ -163,30 +164,39 @@ export default function Home() {
               rotateAmplitude={12}
               radius={18}
               glare={0.45}
-              glareColor="#8bbb92"
+              glareColor={(RARITY[m.rarity] ?? RARITY.common).color}
               shadow={0.6}
               floating
               backContent={
-                <div className="ojt-back">
-                  <span className="eyebrow">OJT details</span>
-                  <h3>{m.name}</h3>
-                  <dl>
-                    <dt>Role</dt><dd>{m.role}</dd>
-                    <dt>Company</dt><dd>{m.company}</dd>
-                    <dt>Supervisor</dt><dd>{m.supervisor}</dd>
-                    <dt>School</dt><dd>{m.school}</dd>
-                    <dt>Course</dt><dd>{m.course}</dd>
-                    <dt>Duration</dt><dd>{m.duration}</dd>
-                    <dt>Total hours</dt><dd>{m.totalHours}</dd>
-                  </dl>
-                  <small>Click to flip back</small>
+                <div
+                  className={`member-reveal member-reveal--${m.rarity ?? 'common'}`}
+                  style={{ '--rarity': (RARITY[m.rarity] ?? RARITY.common).color }}
+                >
+                  <span className="member-shine" aria-hidden="true" />
+                  {(m.rarity ?? 'common') !== 'common' &&
+                    [0, 1, 2, 3, 4].map((i) => (
+                      <i key={i} className="member-sparkle" style={{ '--i': i }} aria-hidden="true" />
+                    ))}
+                  <span className={`member-rarity member-rarity--${m.rarity ?? 'common'}`}>
+                    {(RARITY[m.rarity] ?? RARITY.common).label}
+                  </span>
+                  <img
+                    src={`${import.meta.env.BASE_URL}${m.photo.replace(/^\//, '')}`}
+                    alt={m.name}
+                    draggable={false}
+                    style={m.photoPosition ? { objectPosition: m.photoPosition } : undefined}
+                  />
+                  <div className="member-reveal__info">
+                    <strong>{m.name}</strong>
+                    <span>{m.role} · {m.company}</span>
+                  </div>
                 </div>
               }
             >
               <TiltedCardLayer depth={26}>
-                <div className="ojt-front">
-                  <strong>{m.name}</strong>
-                  <span>{m.role} · {m.company}</span>
+                <div className="member-front" aria-hidden="true">
+                  <b>?</b>
+                  <small>Who could it be?</small>
                 </div>
               </TiltedCardLayer>
             </TiltedCard>
